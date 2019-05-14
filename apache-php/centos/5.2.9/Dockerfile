@@ -1,6 +1,10 @@
 FROM centos:6.8
 MAINTAINER Pierre Lejeune <lejeune.pierre.41@gmail.com>
 
+RUN yum -y update ca-certificates
+COPY ca-certificates/* /etc/pki/ca-trust/source/anchors/
+RUN update-ca-trust force-enable && update-ca-trust extract
+
 RUN yum update -y
 
 RUN curl https://museum.php.net/php5/php-5.2.9.tar.gz -O && tar xfz php-5.2.9.tar.gz && rm php-5.2.9.tar.gz
