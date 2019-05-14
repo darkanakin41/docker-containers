@@ -1,8 +1,8 @@
 FROM centos:6.8
-MAINTAINER Pierre Lejeune <lejeune.pierre.41@gmail.com>
+MAINTAINER Pierre Lejeune <pierre.lejeune@gfi.fr>
 
 RUN yum -y update ca-certificates
-COPY ca-certificates/* /etc/pki/ca-trust/source/anchors/
+COPY .ca-certificates/*.crt /etc/pki/ca-trust/source/anchors/
 RUN update-ca-trust force-enable && update-ca-trust extract
 
 RUN yum update -y
@@ -26,7 +26,7 @@ RUN yum install -y libmcrypt libmcrypt-devel libmhash-devel mysql mysql-server m
 
 #RUN curl  -O
 RUN rpm -Uvh http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-centos94-9.4-3.noarch.rpm \
-    && sed -i "s/baseurl=https/baseurl=http/" /etc/yum.repos.d/pgdg-94-centos.repo \
+    && sed -i "s/baseurl=https/baseurl=http/" /etc/yum.repos.d/pgdg-redhat-all.repo \
     && yum install -y postgresql94-server postgresql94-devel
 
 RUN ln -s /usr/pgsql-9.4/lib/libpq.so.5.7 /usr/lib/libpq.so
